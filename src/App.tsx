@@ -1,11 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-
 function App() {
   return (
-    <div className="App">
-      <h1 className='text-red-400'>Hello</h1>
+    <div className="App flex justify-center items-center h-screen">
+      <h1 className='text-3xl font-bold text-center text-red-400'>Hello</h1>
     </div>
   )
 }
