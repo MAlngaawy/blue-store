@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "./app/counter/counterSlice";
-import { RootState } from "./app/store";
+import { decrement, increment } from "../counter/counterSlice";
+import { RootState } from "../store";
 
-function App() {
+type Props = {};
+
+const Home = (props: Props) => {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
-
   return (
     <div className="App flex flex-col gap-6 justify-center items-center h-screen">
       <div className="flex gap-2">
@@ -27,6 +28,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default Home;
