@@ -15,6 +15,7 @@
     "@mantine/hooks": "^5.10.0",
     "@mantine/notifications": "^5.10.0",
     "@reduxjs/toolkit": "^1.9.1",
+    "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
     "firebase": "^9.15.0",
     "localforage": "^1.10.0",
