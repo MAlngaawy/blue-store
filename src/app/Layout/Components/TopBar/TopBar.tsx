@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { json, Link } from "react-router-dom";
+import { json, Link, NavLink } from "react-router-dom";
 import cn from "classnames";
 
 type Props = {};
@@ -59,10 +59,17 @@ type ListItemProps = {
 const ListItem = ({ text, link, className, setShow }: ListItemProps) => {
   return (
     <li
-      className={`font-medium ${className}`}
+      className={` text-gray-900 ${className}`}
       onClick={() => setShow && setShow(false)}
     >
-      <Link to={link}>{text}</Link>
+      <NavLink
+        style={({ isActive }) =>
+          isActive ? { fontWeight: "bold" } : { fontWeight: "400" }
+        }
+        to={link}
+      >
+        {text}
+      </NavLink>
     </li>
   );
 };
