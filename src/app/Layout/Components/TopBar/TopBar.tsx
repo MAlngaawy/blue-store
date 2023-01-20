@@ -18,6 +18,16 @@ const TopBar = (props: Props) => {
           <ListItem text="Home" link="/" />
           <ListItem text="Profile" link="/profile" />
           <ListItem text="React Apps" link="/react-apps" />
+          <ListItem
+            className="px-4 py-2 border border-black rounded-md"
+            text="Sign Up"
+            link="/sign-up"
+          />
+          <ListItem
+            className="px-4 py-2 border border-black bg-black text-white rounded-md"
+            text="Login"
+            link="/login"
+          />
         </ul>
       </div>
 
@@ -58,11 +68,9 @@ type ListItemProps = {
 };
 const ListItem = ({ text, link, className, setShow }: ListItemProps) => {
   return (
-    <li
-      className={` text-gray-900 ${className}`}
-      onClick={() => setShow && setShow(false)}
-    >
+    <li className={` text-gray-900`} onClick={() => setShow && setShow(false)}>
       <NavLink
+        className={className}
         style={({ isActive }) =>
           isActive ? { fontWeight: "bold" } : { fontWeight: "400" }
         }
