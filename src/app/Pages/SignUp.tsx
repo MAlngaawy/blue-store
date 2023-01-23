@@ -1,15 +1,42 @@
 import { Input, PasswordInput } from "@mantine/core";
-import React from "react";
-
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import app from "../../firebase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/user/userSlice";
+import { useCallback } from "react";
 type Props = {};
 
 const SignUp = (props: Props) => {
+  const auth = getAuth(app);
+  const dispatch = useDispatch();
+
+  // Firebase Signup User
+  const createUser = (email: string, password: string) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        dispatch(addUser(user));
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Sign up Error Message", errorMessage);
+        console.error("Sign up Error Code", errorCode);
+      });
+  };
+
   const handleSignUp = (e: any) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const name = formData.get("name");
     const password = formData.get("password");
+
+    if (typeof email === "string" && typeof password === "string") {
+      createUser(email, password);
+    }
 
     console.log({ email, name, password });
   };

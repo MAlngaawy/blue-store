@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "../counter/counterSlice";
+import { decrement, increment } from "../store/counter/counterSlice";
 import { RootState } from "../store";
 
 type Props = {};
 
 const ReactApps = (props: Props) => {
   const count = useSelector((state: RootState) => state.counter.value);
+  const user = useSelector((state: RootState) => state.user.user);
+  console.log(user);
+
   const dispatch = useDispatch();
   return (
     <div className="h-full">
