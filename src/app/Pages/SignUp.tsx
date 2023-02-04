@@ -3,12 +3,24 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import app from "../../firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/user/userSlice";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+//@ts-ignore
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const SignUp = (props: Props) => {
   const auth = getAuth(app);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("effect");
+    const token = Cookies.get("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
 
   // Firebase Signup User
   const createUser = (email: string, password: string) => {

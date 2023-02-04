@@ -4,14 +4,27 @@ import {
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import app from "../../firebase";
 import { addUser } from "../store/user/userSlice";
+//@ts-ignore
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const Login = (props: Props) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("effect");
+    const token = Cookies.get("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
+
   const auth = getAuth(app);
   const dispatch = useDispatch();
   // Firebase Signup User
@@ -21,7 +34,11 @@ const Login = (props: Props) => {
         // Signed in
         const user = userCredential.user;
         dispatch(addUser(user));
-        console.log(user);
+        //@ts-ignore
+        Cookies.set("token", user.accessToken);
+        navigate("/");
+        //@ts-ignore
+        console.log(user.accessToken);
       })
       .catch((error) => {
         const errorCode = error.code;
