@@ -29,7 +29,9 @@ const SignUp = (props: Props) => {
         // Signed in
         const user = userCredential.user;
         dispatch(addUser(user));
-        console.log(user);
+        //@ts-ignore
+        Cookies.set("token", user.accessToken);
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;

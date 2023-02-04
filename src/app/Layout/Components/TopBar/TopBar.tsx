@@ -3,6 +3,8 @@ import { json, Link, NavLink } from "react-router-dom";
 import cn from "classnames";
 //@ts-ignore
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { removeUser } from "../../../store/user/userSlice";
 
 type Props = {};
 
@@ -79,6 +81,7 @@ const ListItem = ({ text, link, className, setShow }: ListItemProps) => {
 
 const AuthButtons = () => {
   const token = Cookies.get("token");
+  const dispatch = useDispatch();
 
   if (!token) {
     return (
@@ -101,6 +104,7 @@ const AuthButtons = () => {
     <div
       onClick={() => {
         Cookies.set("token", "");
+        dispatch(removeUser());
       }}
     >
       <ListItem

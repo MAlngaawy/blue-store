@@ -38,7 +38,7 @@ const Login = (props: Props) => {
         Cookies.set("token", user.accessToken);
         navigate("/");
         //@ts-ignore
-        console.log(user.accessToken);
+        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
