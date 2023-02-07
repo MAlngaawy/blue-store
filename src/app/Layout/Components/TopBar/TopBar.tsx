@@ -21,7 +21,7 @@ const TopBar = (props: Props) => {
         <ul className="navigation flex gap-4">
           <ListItem text="Home" link="/" />
           <ListItem text="Profile" link="/profile" />
-          <ListItem text="React Apps" link="/react-apps" />
+          {/* <ListItem text="React Apps" link="/react-apps" /> */}
           <AuthButtons />
         </ul>
       </div>
@@ -48,7 +48,7 @@ const TopBar = (props: Props) => {
           <ul className="text-2xl navigation flex flex-col justify-center items-center gap-2">
             <ListItem setShow={setShow} text="Home" link="/" />
             <ListItem setShow={setShow} text="Profile" link="/profile" />
-            <ListItem text="React Apps" link="/react-apps" />
+            {/* <ListItem text="React Apps" link="/react-apps" /> */}
             <AuthButtons />
           </ul>
         </div>

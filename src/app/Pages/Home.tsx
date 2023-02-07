@@ -6,14 +6,19 @@ import { getUserFn } from "../store/user/userSlice";
 type Props = {};
 
 const Home = (props: Props) => {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
-  const user = useSelector(getUserFn);
-  console.log("user", user);
+  const { user } = useSelector(getUserFn);
 
   return (
     <div className="h-full">
-      <div>Home</div>
+      {user ? (
+        <div className="p-20 mx-auto my-10 bg-blue-400 text-4xl font-bold text-white">
+          You Are A Member
+        </div>
+      ) : (
+        <div className="p-20 mx-auto my-10 bg-gray-400 text-4xl font-bold text-white">
+          You Are A Guiest
+        </div>
+      )}
     </div>
   );
 };
