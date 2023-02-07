@@ -22,4 +22,5 @@ export const userSlice = createSlice({
 });
 
 export const { addUser, removeUser } = userSlice.actions;
+export const getUserFn = (state: any): any => state.user;
 export default userSlice.reducer;
