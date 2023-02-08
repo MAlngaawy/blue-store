@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "../store/counter/counterSlice";
-import { RootState } from "../store";
+// import { decrement, increment } from "../store/counter/counterSlice";
+// import { RootState } from "../store";
 import { getUserFn } from "../store/user/userSlice";
 
 type Props = {};

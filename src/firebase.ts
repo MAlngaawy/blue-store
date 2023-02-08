@@ -8,12 +8,12 @@ import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: envValue("VITE_FIREBASE_API_KEY"),
-  authDomain: envValue("blue-store-de646.firebaseapp.com"),
-  databaseURL: "https://fir-with-react-374b4.firebaseio.com",
-  projectId: "fir-with-react-374b4",
-  storageBucket: "fir-with-react-374b4.appspot.com",
-  messagingSenderId: "128589536763",
-  appId: "1:128589536763:web:93d86b9d73566968cebf5e",
+  authDomain: envValue("VITE_FIREBASE_AUTH_DOMAIN"),
+  databaseURL: envValue("VITE_FIREBASE_DATABASEURL"),
+  projectId: envValue("VITE_FIREBASE_PROJECT_ID"),
+  storageBucket: envValue("VITE_FIREBASE_STORAGE_BUCKET"),
+  messagingSenderId: envValue("VITE_FIREBASEMESSAGING_STANDER_ID"),
+  appId: envValue("VITE_FIREBASE_APP_ID"),
 };
 
 // Initialize Firebase
