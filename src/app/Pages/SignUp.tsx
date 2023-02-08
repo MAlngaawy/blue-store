@@ -1,15 +1,17 @@
-import { Input, PasswordInput } from "@mantine/core";
+import { Input, Loader, PasswordInput } from "@mantine/core";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import app from "../../firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/user/userSlice";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 //@ts-ignore
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { showNotification } from "@mantine/notifications";
 type Props = {};
 
 const SignUp = (props: Props) => {
+  const [loading, setLoading] = useState(false);
   const auth = getAuth(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ const SignUp = (props: Props) => {
 
   // Firebase Signup User
   const createUser = (email: string, password: string) => {
+    setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
@@ -32,12 +35,21 @@ const SignUp = (props: Props) => {
         //@ts-ignore
         Cookies.set("token", user.accessToken);
         navigate("/");
+        setLoading(false);
+        showNotification({
+          title: "Done",
+          message: "user Created",
+          color: "green",
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error("Sign up Error Message", errorMessage);
-        console.error("Sign up Error Code", errorCode);
+        setLoading(false);
+        showNotification({
+          title: "Sorry",
+          message: errorCode,
+          color: "red",
+        });
       });
   };
 
@@ -45,14 +57,13 @@ const SignUp = (props: Props) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
-    const name = formData.get("name");
     const password = formData.get("password");
 
     if (typeof email === "string" && typeof password === "string") {
       createUser(email, password);
     }
 
-    console.log({ email, name, password });
+    console.log({ email, password });
   };
 
   return (
@@ -60,10 +71,10 @@ const SignUp = (props: Props) => {
       <h1 className="text-xl">SignUp</h1>
       <form onSubmit={handleSignUp} className="flex flex-col gap-2">
         <Input name="email" autoFocus placeholder="E-mail" />
-        <Input name="name" placeholder="Name" />
+        {/* <Input name="name" placeholder="Name" /> */}
         <PasswordInput name="password" placeholder="Password" />
-        <button className="py-2 bg-green-400 text-white font-bold text-xl rounded-md">
-          Create User
+        <button className="py-2 bg-green-400 text-white font-bold text-xl rounded-md flex justify-center items-center">
+          {loading ? <Loader size={"sm"} /> : "Create User"}
         </button>
       </form>
     </div>

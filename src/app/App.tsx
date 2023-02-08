@@ -10,14 +10,20 @@ import Home from "./Pages/Home";
 import { router } from "./Config/Routes";
 import Layout from "./Layout/Layout";
 import { AuthProvider } from "./auth/AuthContext";
+import { NotificationsProvider } from "@mantine/notifications";
+import { MantineProvider } from "@mantine/core";
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
-        <AuthProvider>
-          <Layout />
-        </AuthProvider>
-      </div>
+      <MantineProvider withNormalizeCSS withGlobalStyles>
+        <NotificationsProvider>
+          <div className="App">
+            <AuthProvider>
+              <Layout />
+            </AuthProvider>
+          </div>
+        </NotificationsProvider>
+      </MantineProvider>
     </BrowserRouter>
   );
 }

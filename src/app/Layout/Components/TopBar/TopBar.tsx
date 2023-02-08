@@ -11,9 +11,9 @@ type Props = {};
 const TopBar = (props: Props) => {
   const [show, setShow] = useState<boolean>(false);
   return (
-    <div className="p-4 bg-blue-200 flex justify-between items-center">
-      <div className="text-blue-500 font-extrabold text-4xl">
-        blue <span className="text-xs">Store</span>
+    <div className="p-4 bg-white shadow-sm flex justify-between items-center">
+      <div className=" font-extrabold text-4xl">
+        bakery <span className="text-xs">Store</span>
       </div>
 
       {/* Descktop View */}

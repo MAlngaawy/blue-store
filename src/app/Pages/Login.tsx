@@ -1,20 +1,23 @@
-import { Input, PasswordInput } from "@mantine/core";
+import { Input, Loader, PasswordInput } from "@mantine/core";
 import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import app from "../../firebase";
 import { addUser } from "../store/user/userSlice";
+
 //@ts-ignore
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { showNotification } from "@mantine/notifications";
 
 type Props = {};
 
 const Login = (props: Props) => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +32,7 @@ const Login = (props: Props) => {
   const dispatch = useDispatch();
   // Firebase Signup User
   const signInUser = (email: string, password: string) => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
@@ -39,12 +43,17 @@ const Login = (props: Props) => {
         navigate("/");
         //@ts-ignore
         console.log(user);
+        setLoading(false);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.error("Sign In Error Message", errorMessage);
-        console.error("Sign In Error Code", errorCode);
+        setLoading(false);
+        showNotification({
+          title: "Sorry",
+          message: errorCode,
+          color: "red",
+        });
       });
   };
 
@@ -67,8 +76,8 @@ const Login = (props: Props) => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <Input name="email" autoFocus placeholder="E-mail" />
         <PasswordInput name="password" placeholder="Password" />
-        <button className="py-2 bg-blue-400 text-white font-bold text-xl rounded-md">
-          Login
+        <button className="py-2 bg-blue-400 text-white font-bold text-xl rounded-md flex justify-center items-center">
+          {loading ? <Loader size={"sm"} /> : "Login"}
         </button>
       </form>
     </div>

@@ -8,7 +8,7 @@ const Layout = (props: Props) => {
   const content = useRoutes(router);
 
   return (
-    <main className="min-h-screen overflow-x-hidden relative bg-gray-100">
+    <main className="min-h-screen overflow-x-hidden relative bg-[#fbfbfb]">
       <TopBar />
       <div className="relative z-10 w-11/12 sm:w-4/5 mx-auto max-w-7xl pt-10">
         {content}
