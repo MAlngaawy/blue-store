@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { auth } from "../../firebase";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -7,6 +8,8 @@ import {
   signOut,
   User,
 } from "firebase/auth";
+import { addUser, getUserFn } from "../store/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   children: any;
@@ -16,7 +19,10 @@ type Props = {
 const UserContext = createContext();
 // export const AuthContext = createContext();
 export const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+  const { user } = useSelector(getUserFn);
+  const dispatch = useDispatch();
 
   const createUser = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -29,11 +35,12 @@ export const AuthProvider = ({ children }: Props) => {
   const logout = () => {
     return signOut(auth);
   };
+  const currentUser = auth.currentUser;
+  console.log(currentUser);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
+      dispatch(addUser(currentUser));
     });
 
     return () => {

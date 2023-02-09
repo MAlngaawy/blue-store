@@ -5,9 +5,9 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import app from "../../firebase";
-import { addUser } from "../store/user/userSlice";
+import { addUser, getUserFn } from "../store/user/userSlice";
 
 //@ts-ignore
 import Cookies from "js-cookie";
@@ -19,11 +19,10 @@ type Props = {};
 const Login = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user } = useSelector(getUserFn);
 
   useEffect(() => {
-    console.log("effect");
-    const token = Cookies.get("token");
-    if (token) {
+    if (user) {
       navigate("/");
     }
   }, []);
@@ -35,14 +34,9 @@ const Login = (props: Props) => {
     setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         dispatch(addUser(user));
-        //@ts-ignore
-        Cookies.set("token", user.accessToken);
         navigate("/");
-        //@ts-ignore
-        console.log(user);
         setLoading(false);
       })
       .catch((error) => {

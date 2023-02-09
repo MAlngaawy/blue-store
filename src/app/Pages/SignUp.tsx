@@ -1,8 +1,8 @@
 import { Input, Loader, PasswordInput } from "@mantine/core";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import app from "../../firebase";
-import { useDispatch } from "react-redux";
-import { addUser } from "../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, getUserFn } from "../store/user/userSlice";
 import { useCallback, useEffect, useState } from "react";
 //@ts-ignore
 import Cookies from "js-cookie";
@@ -15,11 +15,10 @@ const SignUp = (props: Props) => {
   const auth = getAuth(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useSelector(getUserFn);
 
   useEffect(() => {
-    console.log("effect");
-    const token = Cookies.get("token");
-    if (token) {
+    if (user) {
       navigate("/");
     }
   }, []);
@@ -29,11 +28,8 @@ const SignUp = (props: Props) => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         dispatch(addUser(user));
-        //@ts-ignore
-        Cookies.set("token", user.accessToken);
         navigate("/");
         setLoading(false);
         showNotification({

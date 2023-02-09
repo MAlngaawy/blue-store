@@ -17,6 +17,7 @@ export const userSlice = createSlice({
     },
     removeUser: (state) => {
       state.user = null;
+      console.log("state.user", state.user);
     },
   },
 });

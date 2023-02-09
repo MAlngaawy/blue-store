@@ -7,6 +7,7 @@ type Props = {};
 
 const Home = (props: Props) => {
   const { user } = useSelector(getUserFn);
+  console.log("User from Home", user);
 
   return (
     <div className="h-full">

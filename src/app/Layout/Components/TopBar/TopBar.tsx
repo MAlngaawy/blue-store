@@ -3,8 +3,9 @@ import { json, Link, NavLink } from "react-router-dom";
 import cn from "classnames";
 //@ts-ignore
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
-import { removeUser } from "../../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserFn, removeUser } from "../../../store/user/userSlice";
+import { auth } from "../../../../firebase";
 
 type Props = {};
 
@@ -80,10 +81,10 @@ const ListItem = ({ text, link, className, setShow }: ListItemProps) => {
 };
 
 const AuthButtons = () => {
-  const token = Cookies.get("token");
   const dispatch = useDispatch();
+  const { user } = useSelector(getUserFn);
 
-  if (!token) {
+  if (!user) {
     return (
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
         <ListItem
@@ -103,7 +104,7 @@ const AuthButtons = () => {
   return (
     <div
       onClick={() => {
-        Cookies.set("token", "");
+        auth.signOut();
         dispatch(removeUser());
       }}
     >
